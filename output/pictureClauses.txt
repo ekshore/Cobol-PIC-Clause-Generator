@@ -1,0 +1,20 @@
+
+            05 FILLER               PIC X(5)    VALUE   "DATE:".
+            05 FILLER               PIC X(1)    VALUE   SPACE.
+            05 F                    PIC 9(2).
+            05 FILLER               PIC 9(1)    VALUE   "/".
+            05 F                    PIC 9(2).
+            05 FILLER               PIC 9(1)    VALUE   "/".
+            05 F                    PIC 9(4).
+            05 FILLER               PIC X(36)   VALUE   SPACE.
+            05 F                    PIC X(13)   VALUE   "LONGABERGER'S".
+            05 FILLER               PIC X(1)    VALUE   SPACE.
+            05 F                    PIC X(9)    VALUE   "HOMESTEAD".
+            05 FILLER               PIC X(1)    VALUE   SPACE.
+            05 F                    PIC X(4)    VALUE   "SHOP".
+            05 FILLER               PIC X(44)   VALUE   SPACE.
+            05 F                    PIC X(5)    VALUE   "PAGE:".
+            05 FILLER               PIC X(1)    VALUE   SPACE.
+            05 F                    PIC Z9.
+            05 FILLER               PIC X(0)    VALUE   SPACE.
+
