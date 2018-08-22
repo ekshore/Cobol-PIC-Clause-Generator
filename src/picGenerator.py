@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # Written by Caleb Ekstrand
 # 2/7/2017
-# Version 2
+# Version 1.2
 # This script is to take in a printer spacing chart in comma demlimited format.
 # And ouput the nessary picture clauses in COBOL code.
 
@@ -9,18 +9,19 @@
 
 import os
 
-for file in os.listdir(os.getcwd()):
-  if file.endswith('.csv'):
-    if input(file + '   :is the is the correct file for the PCS Y/N?  ').upper() == 'Y':
-      fileName = file
-      break
-    else:continue
-try:
-  inFile = open(fileName, 'r')
-except:
-  print ('file failed')
-outfile = open('pictureClauses.txt', 'w')
+def getInfile():
+  for file in os.listdir(os.getcwd() + '/../resources'):
+    if file.endswith('.csv'):
+      if input(file + ' : is the is the correct file for the PCS Y/N?  ').upper() == 'Y':
+        return '../resources/' + file
 
+try:
+  inFile = open(getInfile(), 'r')
+except:
+  print ('Error opening file!')
+  exit()
+
+outfile = open('../output/pictureClauses.txt', 'w')
 
 def main():
   record = ''
@@ -29,8 +30,6 @@ def main():
     n += 1
     if n < 4: continue
     processInput(line)
-#    if n > 11: break
-
 
 
 #This function sorts through all the commas in the .csv file for the usable data..
