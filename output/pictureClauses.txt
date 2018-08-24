@@ -1,0 +1,3 @@
+
+            05 G                    PIC X(5)    VALUE   "DATE:".
+            05 FILLER               PIC X(1)    VALUE   SPACE.

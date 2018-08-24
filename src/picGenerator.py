@@ -1,77 +1,22 @@
 #!/usr/bin/python
 # Written by Caleb Ekstrand
 # 2/7/2017
-# Version 1.2
+# Version 2.0
 # This script is to take in a printer spacing chart in comma demlimited format.
 # And ouput the nessary picture clauses in COBOL code.
 
 #fileName = input('Please enter file name of the Printer Spacing Chart: ')
 
-import os
+from fileHandler import fileHandler
 
-def getInfile():
-  for file in os.listdir(os.getcwd() + '/../resources'):
-    if file.endswith('.csv'):
-      if input(file + ' : is the is the correct file for the PCS Y/N?  ').upper() == 'Y':
-        return '../resources/' + file
-
-try:
-  inFile = open(getInfile(), 'r')
-except:
-  print ('Error opening file!')
-  exit()
-
-outfile = open('../output/pictureClauses.txt', 'w')
+fHandler = fileHandler()
 
 def main():
-  record = ''
-  n = 0
-  for line in inFile:
-    n += 1
-    if n < 4: continue
-    processInput(line)
-
-
-#This function sorts through all the commas in the .csv file for the usable data..
-def processInput(line):
-  charCount, skip = 0, 0
-  processedInput, previous, prevValue = '', '', ''
-
-  start = line.find(',')
-  for char in line[start: ]:
-
-    if skip > 0:
-      skip -= 1
-      continue
-    if char.isspace(): continue
-    if char != ',':
-      #This part looks for commas in an edit masks. commas are represented by ",".
-      #This if looks for a '"' and then adds a comma to the edit mask and tells the loop to
-      #skip the next two iteration character in the string.
-      if char == '"':
-        processedInput = processedInput + ','
-        skip = 2
-        previous = char
-        charCount += 1
-        continue
-      if char != '-':
-        prevValue = char
-      processedInput = processedInput + prevValue
-      charCount += 1
-    else:
-      if previous == ',':
-        nextChar = ' '
-        processedInput = processedInput + ' '
-        charCount += 1
-
-    previous = char
-    if charCount > 132: break
-  processedInput = processedInput + ' '
-  print (processedInput)
-  if processedInput.isspace(): return
-  if not input("Do you wish to process this line Y/N?  ").upper() == 'Y': return
-  dataProcessing(processedInput)
-  outfile.write('\n\n')
+  for line in fHandler.lineGenerator:
+    print(line)
+    if input("Do you wish to process this line Y/N?  ").upper() == 'Y':
+      dataProcessing(line)
+      fHandler.outFile.write('\n\n')
 
 
 #This funcion takes the data given by the processInput funcion and processes
@@ -181,11 +126,11 @@ def picClauseGen(name, type, chars, value, editMask):
 
   if len(printLine) > 72:
     exPrintLine = '      -                            {}'.format(printLine[73: ])
-    outfile.write('\n' + printLine[ : 72])
-    outfile.write('\n' + exPrintLine)
+    fHandler.outFile.write('\n' + printLine[ : 72])
+    fHandler.outFile.write('\n' + exPrintLine)
     print(ran)
   else:
-    outfile.write('\n' + printLine)
+    fHandler.outFile.write('\n' + printLine)
     print(printLine)
 
 main()
