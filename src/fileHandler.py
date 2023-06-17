@@ -5,7 +5,7 @@ class fileHandler:
 
   def __init__(self):
     self.lineGenerator = self.createGenerator()
-    try:    
+    try:
       self.inFile = open(self.getInfile(), 'r')
       self.outFile = open('../output/pictureClauses.txt', 'w')
     except:
